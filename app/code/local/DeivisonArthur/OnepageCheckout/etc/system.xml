@@ -75,6 +75,15 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </jquery>
+                        <freteco_apikey translate="label">
+                            <label>Frete.co API Key</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Api token used for postcode autocompletion. Get an api key at <a href="http://frete.co/" target="blank">http://frete.co/</a>.]]></comment>
+                        </freteco_apikey>
                         <tracoativo translate="label" module="onepagecheckout">
                             <label>Permitir formatacao do campo CEP?</label>
                             <comment>Obs: Coloca o "-" no CEP, porem se estiver trabalhando com o modulo Matrix Rates nao trabalha com o "-"</comment>
@@ -571,9 +580,7 @@
                         </city_file>
                     </fields>
                 </geo_ip>
-
 -->
-
             </groups>
         </onepagecheckout>
     </sections>

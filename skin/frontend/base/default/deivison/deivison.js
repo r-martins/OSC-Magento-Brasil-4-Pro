@@ -432,40 +432,37 @@ jQuery(document).ready(function($j) {
 
 
     			$j.ajax({
-    				url: host + 'frontend/base/default/deivison/buscacep.php?cep=' + document.getElementById(quale+':postcode').value.replace(/\+/g, ''),
+    				url: host + '../onepagecheckout/ajax/getAddressByZipcode?zipcode=' + document.getElementById(quale+':postcode').value.replace(/\+/g, ''),
     				type:'GET',
-    				dataType: 'html',
+    				dataType: 'json',
     				success:function(respostaCEP){
     					//alert(respostaCEP); //para testes
 
                         var r = respostaCEP;
 
-                        street_1 = r.substring(0, (i = r.indexOf(':')));
-                        document.getElementById(quale+':street1').value = unescape(street_1.replace(/\+/g," "));
+                        if(r.resultado==1){
+                            street_1 = r.logradouro;
+                            document.getElementById(quale+':street1').value = unescape(street_1.replace(/\+/g," "));
 
-                        r = r.substring(++i);
-                        street_4 = r.substring(0, (i = r.indexOf(':')));
-                        document.getElementById(quale+':street4').value = unescape(street_4.replace(/\+/g," "));
+                            street_4 = r.bairro;
+                            document.getElementById(quale+':street4').value = unescape(street_4.replace(/\+/g," "));
 
-                        r = r.substring(++i);
-                        city = r.substring(0, (i = r.indexOf(':')));
-                        document.getElementById(quale+':city').value = unescape(city.replace(/\+/g," "));
+                            city = r.cidade;
+                            document.getElementById(quale+':city').value = unescape(city.replace(/\+/g," "));
+                        }
 
-                        r = r.substring(++i);
-                        region = r.substring(0, (i = r.indexOf(':')));
-
-                        //document.getElementById(quale+':region').selectedIndex = unescape(region.replace(/\+/g," "));
-                        //document.getElementById(quale+':region_id').selectedIndex = unescape(region.replace(/\+/g," "));
-
-                        region = region.replace(/\+/g," ");
+                        
+                        region = r.uf;
 
                         //alert(region);
-                        $j('select[id*="'+quale+':region"]').children("option:contains('"+region+"')").attr('selected', 'selected');
-                        $j('select[id*="'+quale+':region_id"]').children("option:contains('"+region+"')").attr('selected', 'selected');
-
-                        //document.getElementById(quale+':region_id').children("option:contains('"+region+"')").attr('selected', 'selected');
-
-
+                        var ufs = {"AC":"Acre", "AL": "Alagoas", "AP": "Amapá", "AM":"Amazonas", "BA":"Bahia", "CE":"Ceara", "ES": "Espirito Santo","GO": "Goias", "MA":"Maranhao", "MT": "Mato Grosso", "MS": "Mato Grosso do Sul", "MG": "Minas Gerais", "PA":"Para", "PB":"Paraiba", "PR": "Parana","PE":"Pernambuco", "PI": "Piaui", "RJ": "Rio de Janeiro","RN": "Rio Grande do Norte", "RS": "Rio Grande do Sul", "RO":"Rondonia", "RR": "Roraima", "SC":"Santa Catarina", "SP": "Sao Paulo", "SE":"Sergipe", "TO": "Tocantins", "DF":"Distrito Federal"};
+                        var options = $("billing:region_id");
+                        var len = options.length;
+                        for (var i = 0; i < len; i++) {
+                            if(options[i].text==ufs[region]){
+                                options[i].selected = true;
+                            }
+                        }
 
                         setTimeout(function() { document.getElementById(quale+':street2').focus(); }, 1);
     				}
